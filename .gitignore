@@ -1,0 +1,20 @@
+# 本地系统文件与 Python 缓存
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 凭据与本地配置
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# 原始训练数据、模型权重及临时处理文件
+/sources/ddpm/data/
+*.pt
+*.pth
+*.ckpt
+/tmp/

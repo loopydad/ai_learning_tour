@@ -1,0 +1,701 @@
+
+--- PAGE 1 ---
+《模式识别与机器学习》
+第4讲：线性分类
+刘乐茂
+复旦大学 计算与智能创新学院
+emaoliu@fudan.edu.cn
+
+--- PAGE 2 ---
+路线图
+机器学习概述
+有监督学习
+无监督学习
+强化学习
+回归
+分类
+聚类
+降维
+密度估计
+线性回归
+基于实例的分类器
+基于规则的分类器
+线性分类器
+非线性分类器
+集成分类器
+kMeans
+PCA
+自编码器
+曲线拟合
+KNN
+决策树
+感知器
+Logistic 回归
+SVM
+神经网络
+前馈神经网络
+卷积神经网络
+循环神经网络
+注意力机制
+2
+
+--- PAGE 3 ---
+内容
+线性分类器
+•线性判别函数
+'广义线性模型
+学习准则
+Fisher 准则
+感知器准则
+'概率模型
+• 生成模型 VS 判别模型
+'Logistic 回归、Softmax 回归
+学习准则
+•交叉熵=KL散度=负对数似然
+3
+
+--- PAGE 4 ---
+本讲内容主要来自
+>'Pattern Recognition and Machine Learning” by Bishop
+•Ch. 4.1.1-4.1.4,4.1.7,4.2.1-4.2.2,4.3.1-4.3.3
+’《神经网络与深度学习》邱锡鹏
+第3章 线性模型
+4
+
+--- PAGE 5 ---
+《模式识别与机器学习》
+第4讲：线性分类
+4.1线性分类的定义
+刘乐茂
+复旦大学 计算与智能创新学院
+emaoliu@fudan.edu.cn
+
+--- PAGE 6 ---
+回顾：分类（Classification）
+分类任务：
+学习输入x和输出类别y之间的映射函数f
+输入×
+函数f
+*给定训练集：（（x），g0））21
+>
+xnERD
+类别1
+类别2
+类别3
+类别.
+6
+
+--- PAGE 7 ---
+线性模型
+>使用“线性模型”进行分类
+g是非线性函数
+y=g（w'x+b）
+•上式称为广义线性模型
+（Generalized Linear Model）
+y= sgn（w'x +b）
+/+I
+if w"x+6>0，
+—1
+if W'x+6<0.
+•决策边界（Decision Boundary）
+•关于x的线性函数
+w'×+6=0
+w'x+0=0
+X2
+7
+
+--- PAGE 8 ---
+判别函数 （Discriminant Functions）
+•线性判别函数（以二分类例）
+f（x） =w'×+6
+'通过阈值函数来进行分类
+f（×）≥0
+f（×）=0
+f（×）≤0
+①2
+R1
+R2
+以x在w方向的投影为微
+w
+×
+×」
+—6
+Twll
+8
+
+--- PAGE 9 ---
+使用“基函数”的广义线性模型
+£2
+0.5
+。
+0.5
+¢1
+9
+
+--- PAGE 10 ---
+损失函数
+如何学习决策边界？
+，最小平方误差？
+R（w）=
+-4
+-8
+-4
+-2
+n=1
+6
+需要寻找更合适的准则
+10
+
+--- PAGE 11 ---
+《模式识别与机器学习》
+第4讲：线性分类
+4.2 Fisher线性判别
+刘乐茂
+复旦大学 计算与智能创新学院
+emaoliu@fudan.edu.cn
+
+--- PAGE 12 ---
+Fisher线性判别 （Fisher Linear Discriminant）
+>什么是好的投影方向？
+一个自然的方法：类中心的连线方
+向
+•方差问题
+2
+0
+-2
+•Fisher准则：最大化类间距离，
+最小化类内方差
+0
+12
+
+--- PAGE 13 ---
+Fisher线性判别
+>Fisher准则
+1
+mc=
+Ncnewc
+二wxw wmc
+类间散度
+类内散度
+Inter-class separation
+J（w）=（mn2-mI）2
+$+S
+Intra-class variance
+NEWe
+nEWc
+Sb=（m-m.）（（m2一m，）T
+W'"Sow
+J（w）=
+WTSww
+argmax
+i xEo：
+W？
+13
+
+--- PAGE 14 ---
+Fisher线性判别
+>Fisher 准则
+max.J（w） =
+wTSow
+WTSww
+L=W「S,W+A（w「S,W-1）
+J（w）=
+w'Sow
+WTSww
+algmax
+max w「S,w
+W
+S.t.
+w'S,W=1
+OL
+=2SW-2ASwW=0
+Ow
+Sw'（mz-m.）（mz-m，）「w =2w
+wx S=（m2-m1）
+14
+
+--- PAGE 15 ---
+小结
+Fisher线性判别是一种降维（Dimensionality Reduction）方
+法，用来提取特征
+•当每个类为高斯分布时比较有效
+对噪声（异常点）比较敏感
+扩展阅读
+•线性判别分析（Linear Discriminant Analysis）
+•https://en.wikipedia.org/wiki/Linear_discriminant_analysis
+15
+
+--- PAGE 16 ---
+《模式识别与机器学习》
+第4讲：线性分类
+4.3感知器（Perceptron）
+刘乐茂
+复旦大学 计算与智能创新学院
+emaoliu@fudan.edu.cn
+
+--- PAGE 17 ---
+感知器
+THE PERCEPTRON: A PROBABILISTIC MODEL FOR
+INFORMATION STORAGE AND ORGANIZATION
+IN THE BRAIN1
+F. ROSENBLATT
+Correll Aeronasical Laboratory
+digital computer known as L.B.M.
+704 and how it has been taught to play
+a fairly creditable game of chess, we'd
+like to tell you about an
+even more
+remarkable machine, the perceptron，
+which, as its name implies, is capable
+of what amounts to original thought.
+The first perceptron has yet to be built，
+The New Yorker, December 6, 1958 P.44
+The IBM 704 computer
+17
+
+--- PAGE 18 ---
+感知器
+1。
+模拟生物神经元行为的机器，有与生物神经元相对应的部件，如权
+重（突触）、偏置（阈值）及激活函数（细胞体），输出 +1或-
+X1
+X2
+Wi
+W2
+W
+-1+、 〇
+XD
+18
+
+--- PAGE 19 ---
+感知器
+学习算法
+'一种错误驱动的在线学习算法：
+•先初始化一个权重向量W一0（通常是全零向量）；
+•每次分错一个样本（2， ）时，即
+vu'x<0
+用这个样本来更新权重
+WT W+yX
+为什么使用这个更新权重公式？
+y（wT+yx「x≥yw'x
+更新后的权重可以降低错分的严重程度！
+19
+
+--- PAGE 20 ---
+感知器的学习过程
+感知机收敛定理：当样本集是线性可分的，那么感知机学习算法在
+有限次更新后一定收敛。
+算法3.1 两类感知器的参数学习算法
+输入：训练集 =｛（ （1）， （ ） =1，最大迭代次数T
+1 初始化：Wo一0,k 0,t一0；
+2 repeat
+3|
+对训练集①中的样本随机排序；
+4
+5
+for n= 1•Ndo
+选取一个样本（x（n），y（n））；
+6
+i 40%（（mx（m）≤Othen
+表示分错
+7
+UOk+1 - WOk +J例z（）；
+8
+k一k+1；
+9
+end
+10
+t个t+1；
+11
+ift= Tthen break；
+12
+end
+13 untilt=T；
+输出：Wk
+// 达到最大迭代次数
+20
+
+--- PAGE 21 ---
+感知器参数学习的更新过程
+1.W2
+W1
+-0.5
+0.5
+0.5
+0.5
+。
+0.5
+W3
+0.5
+W4
+黑色实线：
+分类界面
+黑色向量：
+权重w
+分类界面法向量
+红色实线向量：
+错分的样本向量x
+红色虚线向量：
+YX
+21
+
+--- PAGE 22 ---
+感知器总结
+'一种简单有效的线性分类器
+对于两类问题，如果训练集是线性可分的，那么感知器算法
+可以在有限次迭代后收敛。
+《神经网络与深度学习》3.4.2节
+›损失函数？
+，根据感知器的学习策略，可以反推出感知器的损失函数
+C（W;x,y）= max（0，-yw「x）
+22
+
+--- PAGE 23 ---
+《模式识别与机器学习》
+第4讲：线性分类
+4.4 概率模型
+刘乐茂
+复旦大学 计算与智能创新学院
+emaoliu@fudan.edu.cn
+
+--- PAGE 24 ---
+一种概率方法
+以二分类 例
+00.表示样本的类别
+p（x,W1）
+P（x）
+P（XW1）P（w1）
+p（x|w1）p（w1）+p（x|w2）p（wz）
+分类问题转换为概率密度估计（Probabilistic Density
+Estimation）问题
+•概率生成模型（Probabilistic Generative Models）
+可以根据p（×|0。）生成每个类的样本
+24
+
+--- PAGE 25 ---
+概率生成模型
+p（×w1）p（W1）
+p（w1×） =
+p（x/w1）p（w1）+p（x|w2）p（w2）
+1
+=
+三g（a）
+1+exp（-a）
+P（× w2）p（w2）
+0.5-
+0
+S
+Logistic Sigmoid
+25
+
+--- PAGE 26 ---
+当假设类条件密度为高斯分布
+假设类条件密度高斯分布，并有相同的方差
+N（xWc） =
+（2T）D/2|2|1/2
+'Me,z为高斯分布的均值和方差，D为特征维数。
+Pa的形式为 a=w'x+6
+7
+二次项 x「Z x 相互抵消
+广义线性模型
+p（wix）=o（w'x+b）
+P（×W1）p（W1）
+a= 1og
+P（Xw2）p（w2）
+p（aj）
++log
+P（wz）
+26
+
+--- PAGE 27 ---
+概率判别模型
+•概率判别模型（Probabilistic Discriminative Models）
+'直接估计类条件概率
+p（wix）=o（w'×+b
+'其中W,b沩可学习参数
+0.5
+0
+-5
+0
+5
+Logistic Sigmoid
+27
+
+--- PAGE 28 ---
+扩展到多分类
+当类别数>2
+p（wcX） =
+p（xwc）P（Wc）
+LeP（xwer）P（wc）
+exp（ac）
+softmax（ac）
+Leexp（ac）
+Softmax 函数
+'当ai》aj=p（wilx） 1
+「1.27
+0.9
+L0.4」
+ac = 1ogP（XWc）P（Wc）
++ Softmax
+0.46
+- 0.34
+0.20
+28
+
+--- PAGE 29 ---
+生成模型 vS. 判别模型
+生成模型
+可以生成样本
+生成能力和分类能力等价
+•参数通常会更多
+•需要好的类条件密度建模
+"判别模型
+•只能用作分类
+不将简单问题转换为复杂问题
+•分类往往比密度估计更容易
+参数通常会更少
+•需要好的决策边界
+29
+
+--- PAGE 30 ---
+《模式识别与机器学习》
+第4讲：线性分类
+4.5 Logistic回归
+刘乐茂
+复旦大学 计算与智能创新学院
+emaoliu@fudan.edu.cn
+
+--- PAGE 31 ---
+Logistic回归
+›Logistic Regression
+模型
+1
+8（/C:0）二1。
+损失函数？
+if f（x;W）≥0
+if f（x;w）<O
+函数f：线性函数
+函数g：决策函数
+X1
+X2
+XD
+wp
+•十/—
+31
+
+--- PAGE 32 ---
+Logistic函数与回归
+'Logistic函数
+除了logisitc，还有什么函数f:R （0,1）？
+1
+o（x） =i+exp（-x）
+0.9-
+0.8-
+0.7-
+0.6-
+0.5-
+0.4-
+0.3-
+0.2-
+0.1-
+1
+I+et
+10
+'Logistic 回归
+把线性函数的值域从实
+数区间“挤压”到了（0,1）
+之间，可以用来表示概
+率。
+p（y =1|×）=a（w「x）
+1
+1+exp（-w「x）
+32
+
+--- PAGE 33 ---
+学习准则
+•模型预测条件概率Pe（Y×）
+Po（y =1|x）=o（wTx）
+真实条件概率P，（Y1×）
+对于一个样本（X,y*），其真实条件概率为
+Pr（ =11x） *
+P.（y=01x）=1 *
+如何衡量两个条件分布Po 与P，之间的差异？
+33
+
+--- PAGE 34 ---
+熵（Entropy）
+，在信息论中，熵用来衡量一个随机事件的不确定性。
+H（p）=-二p（2）1ogp（z）
+，熵越高，则随机变量的信息越多
+•熵越低，则随机变量的信息越少
+'在对分布p的符号进行编码时，熵也是理论上最优的平均编码长度，这种编
+码方式称熵编码（Entropy Encoding）
+34
+
+--- PAGE 35 ---
+交叉熵 （Cross Entropy）
+>交叉熵是按照概率分布q的最优编码对真实分布为p的信息进
+行编码的平均编码长度。
+H（p,q =-〉
+p（2） 10g9（2）
+'在给定p的情况下，如果p和q越接近，交叉熵越小；
+'p=q时，交叉熵等于熵
+'如果p和q越远，交叉熵就越大.
+2
+0
+2
+8
+10
+12
+35
+
+--- PAGE 36 ---
+交叉熵
+概率p
+0123456789 Class,i
+Cross entropy, H=Z
+概率q的负对数-logg
+_^
+0123456789 Class,i
+36
+
+--- PAGE 37 ---
+KL散度（Kullback-Leibler Divergence）
+PKL散度是用概率分布q来近似p时所造成的信息损失量。
+'KL散度是按照概率分布q的最优编码对真实分布为p的信息进行编
+码，其平均编码长度（即交叉熵）H（P.q）和p的最优平均编码长度
+（即熵）H（p）之间的差异。
+P
+KL（p,q =H（p,9-H（p）
+=Zp（x）1og
+p（x）
+X
+q×）
+37
+
+--- PAGE 38 ---
+交叉熵损失
+1
+KI（on20）-之pn（ex）bospala
+pe（yx）
+y=0
+KL散度
+×-二P-（g×）1ogpo（g/×）
+交叉熵损失
+3=0
+= -pr（y = 1|x）logpe（y=1|×）-pr（y=0x）log（1-po（y=1|x））
+= -y*logpo（y=1|x）-（1-y*）log（1-po（y= 1|x））
+= - log po（y*|x）
+负对数似然
+y*为x的真实标签
+38
+
+--- PAGE 39 ---
+梯度下降
+，交叉熵损失函数，模型在训练集的风险函数为
+R（w）=一元
+N
+•梯度
+OR（w）=--
+Ow
+N
+N
+1
+N
+二xm（g-Z）
+n=1
+39
+
+--- PAGE 40 ---
+《模式识别与机器学习》
+第4讲：线性分类
+4.6 Softmax回归
+刘乐茂
+复旦大学 计算与智能创新学院
+emaoliu@fudan.edu.cn
+
+--- PAGE 41 ---
+多分类问题的决策边界
+•多分类问题（Multi-Classification）
+构建C个线性判别函数
+fe（x）=WEx+bc
+预测
+C=argmax fc（x）
+C
+决策边界是相交的射线
+'决策区域是凸的
+（2
+（1
+fs
+C3
+f2
+fi
+41
+
+--- PAGE 42 ---
+Softmax回归
+多分类问题
+Y= argmaxecfk,W.）
+•利用sofumax函数，目标类别y=c的条件概率 ：
+SOFTMIAX
+P（y= clx）= softmax（w2x）
+exp（w.x）
+Zi=l exp（w,x）
+-0.7
+'Locis'
+e'
+SCgi）=
+-0.2
+Fo"
+0.1
+～SCORES—> PROBABILITiES
+42
+
+--- PAGE 43 ---
+参数学习
+模型：Softmax回归
+学习准则：交叉熵
+R（W）=
+N
+N
+二（（））™10g3（00）
+n=1
+优化：梯度下降
+OR（W）
+=—
+OW
+43
+
+--- PAGE 44 ---
+交叉熵损失函数
+负对数似然损失函数
+C
+£（y,f（×，0）） = 23logf-（×，②）
+*对于一个三类分类问题，类别为［0.0,1］，预测类别概率为［0.3,0.3,0.4］，
+则
+C（0）=-（0×log（0.3） +0×log（0.3） + 1×log（0.4））
+= -log（0.4）.
+44
+
+--- PAGE 45 ---
+《模式识别与机器学习》
+第4讲：线性分类
+4.7总结
+刘乐茂
+复旦大学 计算与智能创新学院
+emaoliu@fudan.edu.cn
+
+--- PAGE 46 ---
+总结
+广义线性模型
+•线性决策边界
+学习准则
+最小平方误差
+'Fisher 准则
+感知器准则
+'概率模型
+• 生成模型 VS 判别模型
+'Logistic 回归、Softmax 回归
+学习准则
+•交叉熵=KL散度=负对数似然
+46

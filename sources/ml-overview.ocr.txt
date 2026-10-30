@@ -1,0 +1,1593 @@
+来源：/Users/gary/大学/大三上/模式识别与机器学习/2 机器学习概述.pdf
+处理日期：2026-10-28；macOS Vision OCR；全98页，数学符号可能识别错误，不能替代原页。
+
+--- PAGE 1 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+养
+第二讲 机器学习概述
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 2 ---
+大纲
+>2.1 关于概率的一些基本概念
+>2.2 机器学习定义
+>2.3 机器学习类型
+>2.4 机器学习的要素
+>2.5 泛化与正则化
+>2.6线性回归
+>2.7多项式回归
+>2.8线性回归的概率视角
+12.9模型选择与“偏差-方差”分解
+>2.10常用的定理
+《神经网络与深度学习》
+2
+
+--- PAGE 3 ---
+参考资料
+•邱锡鹏，神经网络与深度学习，机械工业出版社，2020.
+ISBN:9787111649687.https://nndl.github.io/
+第2章 机器学习概述
+©YGumal Networks
+and Deep Learning
+神经网络与
+深度学习
+•附录A 线性代数A.2.2
+•附录B微积分 B.1
+•附录C 数学优化 C.2
+•附录D概率论D.1 D.2
+>CM Bishop. Pattern recognition and machine learning. Springer，
+2006
+>Ch. 3.1, 3.1.1-3.1.4, 3.3.1-3.3.2,3.4
+《神经网络与深度学习》
+3
+
+--- PAGE 4 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+第二讲 机器学习概述
+2.1 关于概率的一些基本概念
+刘乐茂
+复旦大学 计算与智能创新学院
+lemaoliu@fudan.edu.cn
+
+--- PAGE 5 ---
+关于概率的一些基本概念
+>概率（Probability）
+•一个随机事件发生的可能性大小，为0到1之间的实数。
+•随机变量（Random Variable）
+>比如随机掷一个骰子，得到的点数就可以看成一个随机变量X，其
+取值为｛1,2,3,4,5,6｝。
+•概率分布（Probability Distribution）
+•一个随机变量X取每种可能值的概率
+P（X=ri）=P（2i），
+tiE｛1⋯
+，N｝
+>并满足
+之n）=1，
+P（xi） ≥ 0，
+《神经网络与深度学习》
+5
+
+--- PAGE 6 ---
+随机变量
+离散随机变量
+•伯努利分布（Bernoulli Distribution）
+•在一次试验中，事件A出现的概率 H，不出现的概率为1 H。
+•若用变量X 表示事件A出现的次数，则X的取值为0和1，其相应的分布为
+《神经网络与深度学习》
+6
+
+--- PAGE 7 ---
+随机变量
+•离散随机变量
+•二项分布（Binomial Distribution）
+•在n次伯努利分布中，若以变量X 表示事件A出现的次数，则X的取值为
+｛0.•，I｝，其相应的分布
+二项式系数表示从n个元素中取出k个元素而不考虑其顺序的组合的总数。
+《神经网络与深度学习»
+7
+
+--- PAGE 8 ---
+随机变量
+•连续随机变量
+•概率分布一般用概率密度函数（Probability Density Function,PDF）
+P（x）来描述。
+1+8
+-8
+p（×）d×= 1
+•高斯分布（Gaussian Distribution）
+X ~N（M,a2）
+1
+P（x）=
+V2TG
+0.8
+0.6
+0.4
+0.2
+05
+《神经网络与深度学习》
+8
+
+--- PAGE 9 ---
+随机变量
+，累积分布函数（Cumulative Distribution Function，CDF）
+>是随机变量X的取值小于等于x的概率
+cdf（x） = P（X ≤x）
+>对于连续随机变量，有
+- cdf
+—pdf
+0.8
+0.6
+0.4
+0.2
+-2|
+-i
+《神经网络与深度学习》
+9
+
+--- PAGE 10 ---
+随机向量
+>随机向量
+•一组随机变量构成的向量
+>离散随机向量的联合概率分布
+（Joint Probability Distribution）为
+P（X =X1,X2=X2，•，XK =XK）=P（X1,X2，•，XK）
+《神经网络与深度学习》
+10
+
+--- PAGE 11 ---
+条件概率
+• 条件概率 （Conditional Probability）
+对于离散随机向量（X,Y），已知X=x的条件下，随机变量Y=y的条件概率力：
+p（ylx）兰P（Y=y×=×）=
+P（x,y）
+p（x）
+P（A）
+P（B）
+P（A and B）
+《神经网络与深度学习»
+11
+
+--- PAGE 12 ---
+条件概率示例
+Marginal Probability
+性别\行业
+男
+女
+计算机
+0.4
+0.1
+0.5
+教育
+0.1
+0.4
+0.5
+P（男|计算机）=
+《神经网络与深度学习》
+Marginal Probability
+0.5
+0.5
+12
+
+--- PAGE 13 ---
+采样（Sampling）
+>采样：给定一个概率分布P（X），生成满足条件的样本
+•也叫抽样
+×①，×②，.，xWN）~p（x）
+Population
+Sample
+Q
+Pr（2）
+7
+勹
+4
+《神经网络与深度学习》
+13
+
+--- PAGE 14 ---
+如何进行随机采样？
+直接采样
+均匀分布Uniform［0,m）
+xt+1=（axttc）modm
+线性同余发生器（Linear congruential generator）
+static unsigned long int next =1;// 种子
+int rand（void） // 生成伪随机数
+｛
+next = next * 1103515245 + 12345：
+return （unsigned int） （next / 65536） % 32768；
+｝
+｛
+void srand（unsigned int seed） // 修改种
+next = seed；
+｝
+• Hull-Dobell定理
+Xt+1=（ax：+c） modm
+迭代公式有周期性（遍历所有的数后
+才重复），它与初始的xo的选择无关，
+如果a, c 和m满足如下三个条件：
+1）a和m的最大公约数为1
+2） 2-1能被m的每个素因子整除
+3） 如果m是4的倍数，那么a-1也是
+《神经网络与深度学习》
+14
+
+--- PAGE 15 ---
+如何进行随机采样？
+›直接采样
+•均匀分布Uniform［0,1）
+离散分布
+float rand（/m
+均匀分布Uniform［a,b）
+a + （b-a） Uniform［0, 1）
+p
+0.6
+0.3
+0.1
+01
+02
+a3
+0.6 0.7
+Uniform［0,1）
+《神经网络与深度学习》
+1
+15
+
+--- PAGE 16 ---
+如何进行随机采样？
+•其它连续分布
+•逆变换采样（Inverse Transform Sampling）
+1二
+0.75号
+0.50
+0.25 号
+Fx
+0
+更多采样方法参考《神经网络与深度学习》第11.5节
+《神经网络与深度学习》
+16
+
+--- PAGE 17 ---
+期望（Expectation ）
+•期望：随机变量的均值
+•对于离散变量
+N
+EIX］=Zxnp（xn）
+n=1
+•对于连续随机变量
+《神经网络与深度学习》
+17
+
+--- PAGE 18 ---
+大数定律（Law of Large Numbers）
+非严格表述
+•样本数量很大的时候，样本均值和真实均值（期望）充分接近。
+>给定N个独立同分布的样本
+x（），x（2），.，x（N）~p（xc）
+•其均值收敛于期望值
+Ton
+N18
+《神经网络与深度学习》
+18
+
+--- PAGE 19 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+*
+养
+第二讲 机器学习概述
+2.2机器学习定义
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 20 ---
+机器学习~自动构建一个映射函数
+语音识别
+图像识别
+围棋
+f（
+f（
+f（
+）=“你好”
+）=“猫”
+）=“5-5”（落子位置）
+对话系统
+f（
+“你好”
+用户输入
+思考题：你在日常生活中有哪些类似的需求？
+《神经网络与深度学习》
+）= “今天天气真不错”
+机器
+20
+
+--- PAGE 21 ---
+为什么要机器学习”（Machine Learning,ML）？
+•现实世界的问题都比较复杂
+>很难通过规则来手工实现
+268934756
+347955672
+587094354
+523495678
+《神经网络与深度学习》
+21
+
+--- PAGE 22 ---
+如何构建映射函数？
+从大量数据中学习规律
+《神经网络与深度学习》
+22
+
+--- PAGE 23 ---
+机器学习定义
+Machine learning （ML） is the study of computer
+algorithms that improve automatically through
+experience and by the use of data.
+https://en.wikipedia.org/wiki/Machine_learning
+机器学习（Machine Learning，ML）是指从有限的观测
+数据中学习（或“猜测”）出具有一般性的规律，并利用这些
+规律对未知数据进行预测的方法.
+《神经网络与深度学习》
+WIKIPEDIA
+The Free Encyclopedia
+23
+
+--- PAGE 24 ---
+机器学习定义
+•机器学习：通过算法使得机器能从大量数据中学习规律从而
+对新的样本做决策。
+>规律：决策（预测）函数
+f*（x）
+输人
+学习到的函数
+J或p（yIx）
+输出
+=1（200），J））=1-
+训练样本集合
+独立同分布pr（X,y）
+A
+学习算法
+- ＄=｛f1（×），£2（×），…
+函数集合
+《神经网络与深度学习》
+24
+
+--- PAGE 25 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+*
+养
+第二讲 机器学习概述
+2.3机器学习类型
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 26 ---
+示例：电影票房预测
+225-
+200-
+175-
+150-
+125-
+100
+75
+50
+25-
+R2=70%
+•
+0
+100
+200
+300
+400
+500
+600
+关键词搜索量（千次）
+700
+800
+900 1 000
+回归（Regression）问题
+《神经网络与深度学习》
+评分
+导演影响力
+演员影响力
+电影档期
+电影投资方
+电影续集
+电影制作技术
+R-squared
+Adjusted R-squared
+F-slalistic
+Prob（F-statistic）
+26
+
+--- PAGE 27 ---
+示例：股价预测
+SBP/TSX COMPOSITE
+as of 4-Apr-2008
+15000
+11000
+10000
+600.0
+，Sep06
+hoyoz，
+Sepo7，.，Japog，
+copsr ifhe 2008 Yarool Ire.
+http://Finance.yanoo.com/
+公司盈利
+负债
+现金流
+销售额
+•>股价
+利润率
+回归：（Regression）问题
+《神经网络与深度学习》
+27
+
+--- PAGE 28 ---
+示例：房价预测
+Size
+（feetz）
+2104
+1416
+1534
+852
+Number of Number of
+bedrooms
+floors
+5
+3
+3
+2
+1
+2
+2
+1
+…
+Age of
+home
+（years）
+45
+40
+30
+36
+回归（Regression）问题
+《神经网络与深度学习》
+Price
+（$1000）
+460
+232
+315
+178
+28
+
+--- PAGE 29 ---
+示例：手写数字识别
+518
+Handwritten Digit
+Recognition
+IEEE TRANSACTICNS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE, VOL. 24, NO. 24, APRIL 2032
+148979841
+550915989
+119247766
+Fig. 8. Al of the miscassfied MNIST vest digits using our method （63 out of 10,000）. The taxt above each digit indicates the example rumber
+tolowod by the true label and he assigned labdl.
+Belongie el al. PAMI 2002
+分类（Classification）问题
+《神经网络与深度学习》
+29
+
+--- PAGE 30 ---
+示例：人脸检测 Face Detection
+分类（Classification）问题
+问题
+《神经网络与深度学习》
+30
+
+--- PAGE 31 ---
+示例：垃圾邮件检测 Spam Detection
+00.
+Resly Raply All Farward
+US $ 119.95 Viagra 50mg x 60 pills - Junk
+Pint
+From: Fannie Fritz <quadalajarae1@aspenreallors.comz
+Subject: US $ 119.95 Viagra 50mg x 60 pills
+Date: March 31, 2008 7:24:53 AM PDT （CA）
+To: Gregory Mori amori@eecs.berkeley.edu>
+buy now Viagra （Sildenafil） 50mg × 30 pills
+http://fullgray.com
+000
+Agsressive inestors Nett -Junk
+woll mhinks this messege /s Aint Ronl
+From: Rae Lundy <MiasignbcardStakon@voanews.com>
+ouDicol. Aggicsa ve hvobtoro Acn
+Date: March 31, 2008 6:38:33 AM PDT （GA）
+Ctood Impes）（NotJurk）
+Cc: richards teecs.berkeley.edu,najigeecs.berkeley.edu，
+Gregory Mori <mori@eocs.berkeley.od.~， rwood@oocs.berkeky.odu
+Introducing the new tech giant in the making
+DNC MultMedia Corp
+Symbol: DCNM
+This is a hugely undervalued Gem with high protle cllents such as
+Microsoft, Samsung. LG. and Napster
+the huge volume and price spike today on the news release is a gcod indicator of
+short and long term movement.
+See the company's outstarding pr and pul the trigger on DCNM
+• Classification problem
+• ti E 10,1f,non-spam, spam
+• 2i counts of words, e.g. Viagra, stock, outperform，
+multi-bagger
+分类（Classification）问题
+《神经网络与深度学习》
+31
+
+--- PAGE 32 ---
+示例：图像聚类 Clustering Images
+SLAG
+Wang et al.， CVPR 2006
+• Only wi is defined: unsupervised learning
+• E.g. wi describes image, find groups of similar images
+《神经网络与深度学习》
+32
+
+--- PAGE 33 ---
+示例：AlphaGo
+LEE SEDOL
+00:02:13
+D Google DeepMind
+Challenge Match
+•①•
+ALPHAGO
+00:27:20
+强化学习-通过与环境进行交互来学习
+《神经网络与深度学习》
+33
+
+--- PAGE 34 ---
+示例：自动驾驶
+Sensors &
+signal sources
+Camera
+images, Lidar
+point cloud
+Cameras, sensors，
+radar, lidar, HP GPS
+GPS, Camcra，
+Lidar point doud
+智能感知
+行为决策
+Raw data
+processor
+Object detection &
+feature extraction
+Vchiclcs，
+Pedestrians，
+Objccts
+Planning & state
+management
+Situation & threat
+assessment, dicision
+making,generate
+collision-free path &
+speed profiles
+Mapping &
+localization
+Estimate precise
+vehicle position on
+local map
+3D position
+《神经网络与深度学习》
+raj. & speec
+rofiles
+Vehicle control
+Generate smooth
+steering, brake，
+throttle control
+signals, detect driven
+override
+90
+34
+
+--- PAGE 35 ---
+常见的机器学习类型
+监督学习
+训练集
+优化目标
+=f（x）或p（g×）
+学习准则
+期望风险最小化
+最大似然估计
+无监督学习
+训练集
+｛x 1
+p（x）或带隐变量
+z的p（x|z）
+最大似然估计
+最小重构错误
+《神经网络与深度学习》
+强化学习
+智能体和环境交互的
+轨迹 和累积奖励G-
+期望总回报E-［G-］
+策略评估
+策略改进
+35
+
+--- PAGE 36 ---
+典型的监督学习问题
+-1.5
+-1 -03
+1 0.5
+回归
+i
+0.60-×+0.52
+i5
+分类
+《神经网络与深度学习》
+36
+
+--- PAGE 37 ---
+典型的无监督学习问题
+。
+。°
+504192
+13一*3
+361728
+69H091
+聚类
+②
+降维
+《神经网络与深度学习》
+密度估计
+37
+
+--- PAGE 38 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+养
+第二讲 机器学习概述
+2.4机器学习的要素
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 39 ---
+机器学习的四个要素
+数据
+模型
+学习
+准则
+《神经网络与深度学习》
+优化
+算法
+39
+
+--- PAGE 40 ---
+模型
+以回归（Regression）为例
+=0.60-x+0.52
+Y
+0
+0
+•
+：•
+•
+。
+-1
+-1
+-1.5|
+-1
+-0.5
+0.5
+1 15
+0
+f（x;e）=W'x+b
+线性模型
+f（x;0）=w「¢（x）+b
+非线性模型
+如果中（x）为可学习的非线性基函数，
+f（x,0） 就等价于神经网络。
+《神经网络与深度学习》
+40
+
+--- PAGE 41 ---
+学习准则
+•一个好的模型应该在所有取值上都与真实映射函数一致
+If（x，日*）一川|＜E，
+V（x,y）EXX
+•损失函数（Loss Function）
+•损失函数是一个非负实数函数，用来量化模型预测和真实标签之间
+的差异
+•以回归问题为例
+•平方损失函数（Quadratic Loss Function）
+《神经网络与深度学习》
+下一讲会介绍更多的损失函数
+41
+
+--- PAGE 42 ---
+学习准则
+•期望风险（Expected Risk）
+真实的数据分布
+损失函数
+《神经网络与深度学习》
+42
+
+--- PAGE 43 ---
+学习准则
+•期望风险可以近似
+•经验风险（Empirical Risk）
+N
+RgrP（e）=
+1
+D
+—
+N
+Zc0, f（xm:O））
+n=1
+•经验风险最小化（Empirical Risk Minimization,ERM）
+•寻找一个参数0*，使得经验风险函数最小化。
+8'=0T8 in.2g”（）
+•机器学习问题转化成一个最优化问题
+《神经网络与深度学习》
+43
+
+--- PAGE 44 ---
+最优化问题
+•机器学习问题转化成为一个最优化问题
+Convex
+Non-convex
+•
+minf（x）
+X
+《神经网络与深度学习》
+44
+
+--- PAGE 45 ---
+梯度下降
+1. 初始化w
+d w
+2. 重复
+1. 计算梯度 01/dw
+2． 更新参数W个w-ad1/dw
+丫
+《神经网络与深度学习》
+Lw-0
+W
+网络参数
+45
+
+--- PAGE 46 ---
+梯度下降法（ Gradient Descent）
+2=×+2y°
+Starting
+Point
+f（x）
+Iteration 3
+Iteration 4
+Convergence
+Rezhori
+Final
+Value
+O.Rp（6）
+0t+1=6-8-
+60
+=0-0，
+12 8£（y,f（（）；⑨））
+n=1
+搜索步长a中也叫作学习率（Learning Rate）
+《神经网络与深度学习》
+46
+
+--- PAGE 47 ---
+学习率是十分重要的超参数！
+IOSS
+very high learning rate
+Too low
+low learning rate
+10）|
+high learning rate
+A small learning rate
+requires many updates
+before reaching the
+minimum point
+good learning rate
+epoch
+《神经网络与深度学习》
+Just right
+10）一
+The optimal learning
+rate swiftly reaches the
+minimum point
+Too high
+10）
+Too large of a learning rate
+causes drastic updates
+which lead to divergent
+behaviors
+47
+
+--- PAGE 48 ---
+随机梯度下降法（Stochastic Gradient Descent, SGD）
+•随机梯度下降法：在每次迭代时只采集一个样本
+0A（y（m.f（e）：⑨））
+0l+1=0 一
+n=1⋯N
+20
+•当经过足够次数的迭代时，随机梯度下降也可以收敛到局部最优解
+•优点：每次计算开销小，支持在线学习
+•缺点：无法充分利用计算机的并行计算能力
+•小批量（Mini-Batch）随机梯度下降法
+小批量梯度下降法
+•随机选取一小部分训练样本来计算梯度并更新参数
+•既可以兼顾随机梯度下降法的优点，也可以提高训练效率
+《神经网络与深度学习》
+48
+
+--- PAGE 49 ---
+随机梯度下降法
+算法 2.1 随机梯度下降法
+输入：训练集 =｛（3（m），y02））份 1，验证集1，学习率c
+1 随机初始化 B；
+2 repeat
+3
+对训练集卫中的样本随机排序；
+4
+for n=1•Ndo
+5
+从训练集卫中选取样本（zc（n），y（n）；
+aL（e;x（n），y（m））
+6
+0个e-8-
+ae
+7
+end
+8 until 模型f（x； e）在验证樂D上的错误率不再下降；
+输出：6
+Why？乙
+11 更新参数
+《神经网络与深度学习》
+49
+
+--- PAGE 50 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+*
+养
+第二讲 机器学习概述
+2.5泛化与正则化
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 51 ---
+机器学习=优化？
+机器学习=优化：NO！
+欠拟合
+正常
+过拟合
+•
+过拟合：经验风险最小化原则很容易导致模型在训练集上错误率很低，但是在未知数据上错
+误率很高。
+过拟合问题往往是由于训练数据少和噪声等原因造成的。
+《神经网络与深度学习》
+51
+
+--- PAGE 52 ---
+泛化误差
+期望风险
+经验风险
+真实分布PP
+8%8
+9p（f）=R（f）-Rg™”（f）
+泛化误差
+《神经网络与深度学习》
+52
+
+--- PAGE 53 ---
+如何减少泛化误差？
+优化
+经验风险最小
+正则化
+降低模型复杂度
+《神经网络与深度学习》
+53
+
+--- PAGE 54 ---
+正则化（Regularization）
+所有损害优化的方法都是正则化。
+增加优化约束
+L1/L2约束、数据增强
+干扰优化过程
+权重衰减、随机梯度下降、提前停止
+Minimize cost
+锴误率
+--- 训练集
+-验证集
+提前停止
+过拟合
+迭代次数
+Minimize cost + penalty
+Minimize penalty
+《神经网络与深度学习》
+54
+
+--- PAGE 55 ---
+提前停止
+•我们使用一个验证集（Validation Dataset）来测试每一次迭
+代的参数在验证集上是否最优。
+，如果在验证集上的错误率不再下降，就停止迭代。
+「错误率
+--- 训练集
+—验证集
+提前停止
+过拟合
+迭代次数
+《神经网络与深度学习»
+55
+
+--- PAGE 56 ---
+提高模型能力的一般性方案
+•使用更多数据
+使用验证集
+•使用交叉验证
+>使用正则化
+•使用复杂模型（C.ghigh order polynomial），但是通过惩罚项使得不要
+“太复杂” （e.g.large weight magnitudes）
+•需要平衡 error vs. regularization（A）
+>使用交叉验证来选择入
+《神经网络与深度学习》
+56
+
+--- PAGE 57 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+养
+第二讲 机器学习概述
+2.6线性回归
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 58 ---
+回归（Regression）
+训练集：｛（x），y（ ）） 1
+>回归问题：
+>x（n）ERD
+wynER 连续变量
+求解X,y之间的映射关系
+1
+Y
+y= f（x,9）
+0
+-1
+0
+《神经网络与深度学习》
+◎
+N =15
+1
+58
+
+--- PAGE 59 ---
+线性回归（Linear Regression）
+>模型
+f（x;W,b）=W'x+6
+•增广权重向量和增广特征向量
+3= 0.60-x+0.52
+二×④1兰
+6=W④B兰
+「1「X1
+；
+=
+X
+1
+1
+W
+b
+=
+Wi
+：
+wp
+b
+3
+1
+0
+-1
+-1.5
+•
+•
+•
+-1
+-0.5
+2 0.5
+1 15
+f（x;w） =W'X
+《神经网络与深度学习》
+59
+
+--- PAGE 60 ---
+经验风险最小化（Empirical Risk Minimization,ERM）
+•训练集D上的经验风险
+N
+R（w）=乙 c（yn,f（（；w））
+N=1
+二
+之2（00-002m）？
+•经验风险最小化
+令
+owR（w）=0
+《神经网络与深度学习》
+60
+
+--- PAGE 61 ---
+矩阵微积分
+•标量关于向量的偏导数
+Oy
+ax
+Oy
+ay
+OXM
+•向量关于向量的偏导数
+ax1
+Of（x）
+Ox
+OxM
+OYN
+ax1
+：
+OXM
+•向量函数及其导数
+Ox
+ax
+=I，
+dAx
+ax
+F=AT，
+ax'A
+ax
+=A
+《神经网络与深度学习》
+61
+
+--- PAGE 62 ---
+经验风险最小化
+12（w0）=？
+dR（w）
+6w
+1a|ly-XTw2
+2
+Ow
+=-X（y-XTw）
+《神经网络与深度学习》
+62
+
+--- PAGE 63 ---
+结构风险最小化（Structure Risk Minimization,SRM）
+当特征之间存在共线性时，XXT不可逆
+•有无穷多个解W，使得经验风险最小，但是，它们的测试集上的表
+现差距很大，我们无法知道哪个更好。
+>结构风险
+>令其最小化，得到
+w*=（XXT +11）-'Xy
+•岭回归（Ridge Regression）
+《神经网络与深度学习》
+63
+
+--- PAGE 64 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+第二讲 机器学习概述
+2.7多项式回归
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 65 ---
+曲线拟合（Curve Fitting）
+From chapter 1 of Bishop’s PRML.
+1
+。
+。
+◎
+0
+一1
+0
+1
+给定训练集：｛（2（），y0）H二1，其中：x（n）ER,y（）ER为连续变量
+求解x，y之间的映射关系：
+《神经网络与深度学习》
+65
+
+--- PAGE 66 ---
+多项式曲线拟合（Polynomial Curve Fitting）
+>模型定义：
+f（x,w）=wo +wjx+ w2x2+ ...+ wwxM
+Y
+1
+0-
+◎
+◎
+◎
+-1-
+0
+1
+《神经网络与深度学习》
+66
+
+--- PAGE 67 ---
+损失函数
+•平方误差 Sum-of-Squares
+y
+R（w） =
+n=1
+•经验风险最小化
+•求解过程和线性回归类似
+《神经网络与深度学习》
+yn）
+f（x（），w）
+x（n）
+67
+
+--- PAGE 68 ---
+如何选择多项式的次数（Degree）？
+M 0
+◎
+M =1
+Y
+y
+◎
+◎
+◎
+1-
+M=3
+。丈
+M=9
+模型选择问题
+model selection problem
+- overfitting
+《神经网络与深度学习》
+68
+
+--- PAGE 69 ---
+如何选择多项式的次数（Degree）？
+wd
+M=9
+Y
+0
+|M=0 M=1 M=3
+0.19
+0.82
+-1.27
+0.31
+7.99
+-25.43
+17.37
+20
+20
+-1
+0
+*
+Wg
+1
+随着M的增大，其多项式系数也变大！
+对大的系数进行惩罚！
+《神经网络与深度学习》
+M=9
+0.35
+232.37
+-5321.83
+48568.31
+-231639.30
+640042.26
+-1061800.52
+1042400.18
+-557682.99
+125201.43
+69
+
+--- PAGE 70 ---
+控制过拟合：正则化（Regularization）
+>惩罚大的系数
+灾（w）=
+正则化项
+•入 为正则化系数 （regularization coefficient）
+《神经网络与深度学习》
+70
+
+--- PAGE 71 ---
+控制过拟合：正则化（Regularization）
+丸（w）=，
+InA=-18
+In入=0
+◎
+In入=-∞ ln入=-18
+0.35
+232.37
+0.35
+4.74
+-5321.83
+-0.77
+48568.31
+-31.97
+-231639.30
+-3.89
+640042.26
+55.28
+-1061800.52
+41.32
+1042400.18
+-45.95
+-557682.99
+-91.53
+125201.43
+72.68
+《神经网络与深度学习》
+In入=0
+0.13
+-0.05
+-0.06
+-0.05
+-0.03
+-0.02
+-0.01
+-0.00
+0.00
+0.01
+71
+
+--- PAGE 72 ---
+控制过拟合：增加训练样本数量
+N =15
+1
+t
+。
+0-
+◎
+0-%
+◎
+一1
+-1
+0
+0
+《神经网络与深度学习》
+。
+08~
+N =100
+◎
+72
+
+--- PAGE 73 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+*
+第二讲 机器学习概述
+2.8线性回归的概率视角
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 74 ---
+从概率角度来看线性回归
+，假设标签y为一个随机变量，其服从以均值为W'X，方差力
+q2的高斯分布。
+f（xiw）
+f（zo, w）
+120
+p（ylx;w,c） = N（y;w"×，c2）
+1
+=
+V2TG
+exp（-9-004g）
+P（ylX;w.o）
+20
+《神经网络与深度学习》
+74
+
+--- PAGE 75 ---
+似然函数（Likelihood）
+•似然函数是关于统计模型p（x;w）的参数w的函数
+概率p（X;w）是描述固定参数w时随机变量x的分布情况
+•似然p（X;w）则是描述已知随机变量x时不同的参数w对其分布的影响
+《神经网络与深度学习》
+75
+
+--- PAGE 76 ---
+线性回归中的似然函数
+• 参数w在训练集D上的似然函数（Likelihood）为
+N
+p（ylx;w,a）=］1pgx;w,c）
+n=1
+=IIN（（）：wox（m），c2）
+n=1
+《神经网络与深度学习》
+76
+
+--- PAGE 77 ---
+最大似然估计（Maximum Likelihood Estimate,MLE）
+>最大似然估计是指找到一组参数w使得似然函数p（yX;w,o）最
+大
+ologp（yX;w,o
+=0
+0w
+WML = （XXT） 'Xy
+《神经网络与深度学习》
+77
+
+--- PAGE 78 ---
+贝叶斯的视角
+贝叶斯学习
+•将参数W也看作随机变量，p（w）为先验分布
+•目标：给定一组观测数据X，求参数w的分布p（wX）
+>p（wX）也称为后验分布（posterior）
+《神经网络与深度学习》
+78
+
+--- PAGE 79 ---
+概率的一些基本概念
+贝叶斯公式
+•两个条件概率p（yx）和p（xly）之间的关系
+p（xyp（y
+p（ylx） =
+p（x）
+•后验、似然、先验
+p（wlx） x p（x|w）p（w）
+后验
+似然
+先验
+posterior
+likelihood prior
+posterior a likelihood × prior
+《神经网络与深度学习》
+79
+
+--- PAGE 80 ---
+贝叶斯估计（Bayesian Estimation）
+•采用贝叶斯估计的线性回归也称 贝叶斯线性回归
+（Bayesian Linear Regression）
+p（W, yIX;v,g）
+p（c0）X.y:1,0=Zwp（w.yX： .の）
+× p（yX, w;a）p（w;v），
+p（w;v）= N（w;0,221）
+后验
+posterior
+似然
+先验
+likelihood
+prior
+log p（w|X,y;v,a） ∞ logp（yX, w;a） + logp（w;v）
+N
+252
+Z
+（p0n-wirt）-
+20240"20，
+20 0"20.
+正则化系数
+《神经网络与深度学习》
+1=92/22
+80
+
+--- PAGE 81 ---
+最大后验估计
+，贝叶斯估计是一种参数的区间估计，即参数在一个区间上的
+分布。
+•如果希望得到一个最优的参数值，可以使用最大后验估计
+（Maximum A Posteriori Estimation,MAP）。
+WMAP = arg max p（yx, w;c）p（w;v）
+W
+WMAP =！
+202①-X「w2-=
+1
+W「W
+212
+最大后验概率等价于平方损失的结构风险最小化
+《神经网络与深度学习》
+正则化系数 2= G2/w2
+81
+
+--- PAGE 82 ---
+总结
+四种准则
+平方误差
+（XXT）-1Xy
+引入先验
+概率
+经验风险最小化—
+结构风险最小化 /
+最大似然估计
+最大后验估计
+（XXT+A1） 'Xy
+《神经网络与深度学习》
+82
+
+--- PAGE 83 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+*
+养
+第二讲 机器学习概述
+2.9 模型选择与“偏差-方差”分解
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 84 ---
+如何选择一个合适的模型？
+>模型选择
+>拟合能力强的模型一般复杂度会比较高，容易过拟合。
+•如果限制模型复杂度，降低拟合能力，可能会欠拟合。
+>如何选择模型？
+>模型越复杂，训练错误越低
+>不能根据训练错误最低来选择模型
+>在选择模型时，测试集不可见
+《神经网络与深度学习》
+84
+
+--- PAGE 85 ---
+模型选择（Model Selection）
+•引入验证集 （Validation Set）
+•将训练集分为两部分：
+•训练集 Training Set
+•验证集 Validation Set
+•如何选择模型：
+•在训练集上训练不同的模型
+•选择在验证集上错误最小的模型
+《神经网络与深度学习》
+85
+
+--- PAGE 86 ---
+模型选择（Model Selection）
+>数据稀疏问题
+•交叉验证 Cross-Validation
+•将训练集分为S组，每次使用S-1组作汐训练集，剩下1组作为验证集
+•取验证集上平均性能最好的一组
+run 1
+run 2
+run 3
+run 4
+《神经网络与深度学习》
+86
+
+--- PAGE 87 ---
+模型选择的准则
+•一些准则
+•赤池信息量准则（Akaike Information Criterion, AIC）
+AIC = 2k-2InL
+k表示模型复杂度，L表示似然函数值
+•贝叶斯信息准则（Bayesian Information Criterion,BIC）
+BIC = klnn - 2lnL
+当样本n很大时，对模型复杂度k的惩罚越大
+•模型复杂度与期望风险之间的关系
+>偏差-方差分解（Bias-Variance Decomposition）
+《神经网络与深度学习》
+87
+
+--- PAGE 88 ---
+偏差-方差分解（Bias-Variance Decomposition）
+•期望风险
+•机器学习算法能学习到的最优模型
+•期望风险可以分解
+可以进一步分解
+通常是由于样本分布以及噪声引
+起的，无法通过优化模型来减少。
+《神经网络与深度学习》
+88
+
+--- PAGE 89 ---
+偏差-方差分解（Bias-Variance Decomposition）
+>在实际训练一个模型时，不同的训练集会得到不同的模型。
+•一个机器学习算法（包括模型以及优化算法）的能力可以用不同训
+练集上的模型的平均性能来评价。
+>令j（x表示在训练集T上学习到的模型
+（bias.x）2
+variance.x
+《神经网络与深度学习》
+89
+
+--- PAGE 90 ---
+偏差-方差分解（Bias-Variance Decomposition）
+>期望错误可以分解沩
+R（f） = （bias）’+ variance +e
+《神经网络与深度学习》
+90
+
+--- PAGE 91 ---
+模型选择：偏差与方差
+低偏差
+高偏差
+最小化期望风险等价于最小化偏差和方差之和
+低方差
+— （bias）2
+variance
+一R（f）
+（a）
+（b）
+高方差
+模型复杂度
+（c）
+（d）
+集成模型：有效的降低方差的方法
+《神经网络与深度学习》
+91
+
+--- PAGE 92 ---
+《神经网络与深度学习》
+https://nndl.github.io/
+*
+养
+第二讲 机器学习概述
+2.10常用的定理
+刘乐茂
+复旦大学 计算与智能创新学院
+Lemaoliu@fudan.edu.cn
+
+--- PAGE 93 ---
+常用的定理
+•没有免费午餐定理（No Free Lunch Theorem，NFL）
+•对于基于迭代的最优化算法，不存在某种算法对所有问题（有限的
+搜索空间内）都有效。如果一个算法对某些问题有效，那么它一定
+在另外一些问题上比纯随机搜索算法更差。
+“there's
+no such thing
+as a free
+lunch."
+《神经网络与深度学习》
+93
+
+--- PAGE 94 ---
+常用的定理
+> 丑小鸭定理（Ugly Duckling Theorem）
+>丑小鸭与白天鹅之间的区别和两只白天鹅之间的区别一样大.
+《神经网络与深度学习»
+94
+
+--- PAGE 95 ---
+常用的定理
+•奧卡姆剃刀原理（Occam's Razor）
+>如无必要，勿增实体
+OCC五 S）
+RAZOR
+A Parsimonious
+Shave Every
+Time！
+《神经网络与深度学习》
+95
+
+--- PAGE 96 ---
+归纳偏置（Inductive Bias）
+，很多学习算法经常会对学习的问题做一些假设，这些假设就
+称为归纳偏置。
+>在最近邻分类器中，我们会假设在特征空间中，一个小的局部区域
+中的大部分样本都同属一类。
+>在朴素贝叶斯分类器中，我们会假设每个特征的条件概率是互相独
+立的。
+•归纳偏置在贝叶斯学习中也经常称为先验（Prior）。
+《神经网络与深度学习》
+96
+
+--- PAGE 97 ---
+PAC学习
+>PAC: Probably Approximately Correct
+，根据大数定律，当训练集大小|DI趋向无穷大时，泛化误差趋
+向于0，即经验风险趋近于期望风险。
+lim R（f）-Rg™（f）=0
+|D|-∞
+PAC学习
+近似正确，O<E<0.5
+可能，0<6 <0.5
+《神经网络与深度学习》
+97
+
+--- PAGE 98 ---
+样本复杂度
+•如果固定E,8，可以反过来计算出样本复杂度力
+n（E,d ≥
+•其中|为假设空间的大小，可以用Rademacher复杂性或VC维来衡
+量。
+•PAC学习理论可以帮助分析一个机器学习方法在什么条件下可以学习到一个近
+似正确的分类器。
+，如果希望模型的假设空间越大，泛化误差越小，其需要的样本数量越多。
+《神经网络与深度学习》
+98
